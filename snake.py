@@ -16,6 +16,29 @@ Y = 5
 X_SPEED = 0
 Y_SPEED = 0
 
+def spawn_food():
+	global FOOD_X
+	global FOOD_Y
+	FOOD_X = random.randint(MIN_X, MAX_X)
+	FOOD_Y = random.randint(MIN_Y, MAX_Y)
+	
+	food_types = ".,@$%"
+	food_type = food_types[random.randint(0,len(food_types)-1)]
+	stdscr.addstr(FOOD_Y, FOOD_X, food_type)
+
+def init_game():
+	global SCORE, FOOD_X, FOOD_Y, ANGLE, X, Y, X_SPEED, Y_SPEED
+	SCORE = 0
+	FOOD_X = 0
+	FOOD_Y = 0
+	ANGLE = 0
+	X = 5
+	Y = 5
+	X_SPEED = 0
+	Y_SPEED = 0
+	
+	spawn_food()
+	
 def clear_scenario():
 	xlen = MAX_X - MIN_X +1
 	for i in range(MIN_Y, MAX_Y+1):
@@ -50,19 +73,13 @@ def update():
 	
 	X+= X_SPEED
 	Y+= Y_SPEED
-	if(Y < MIN_Y):
-		Y = MIN_Y +1
-	if(Y > MAX_Y):
-		Y = MAX_Y -1
-	if(X < MIN_X):
-		X = MIN_X +1
-	if(X > MAX_X):
-		X = MAX_X -1
+	if(Y < MIN_Y or Y > MAX_Y or X < MIN_X or X > MAX_X):
+		return 0
 		
 	if(X == FOOD_X and Y == FOOD_Y):
 		SCORE += 1
 		spawn_food()
-	
+			
 def draw_borders():
 	border = "#"
 	stdscr.addstr(1,1, border*40)
@@ -71,17 +88,7 @@ def draw_borders():
 	for i in range(1,11):
 		stdscr.addstr(i, 1, border)
 		stdscr.addstr(i, 40, border)
-
-def spawn_food():
-	global FOOD_X
-	global FOOD_Y
-	FOOD_X = random.randint(MIN_X, MAX_X)
-	FOOD_Y = random.randint(MIN_Y, MAX_Y)
-	
-	food_types = ".,@$%"
-	food_type = food_types[random.randint(0,len(food_types)-1)]
-	stdscr.addstr(FOOD_Y, FOOD_X, food_type)
-	
+		
 def draw_score():
 	stdscr.addstr(0, 32, "SCORE: " + str(SCORE))
 	
@@ -97,18 +104,26 @@ def draw_snake():
 	
 	#tail
 	if(X_SPEED > 0):
-		stdscr.addstr(Y, X-X_SPEED*SCORE, "-"*SCORE)
+		for i in range(X-SCORE, X ):
+			if(i >= MIN_X and i <= MAX_X):
+				stdscr.addstr(Y, i, "-")
+		
 	if(X_SPEED < 0):
-		stdscr.addstr(Y, X+1, "-"*SCORE)
+		for i in range(X+1, X+1+SCORE):
+			if(i >= MIN_X and i <= MAX_X):
+				stdscr.addstr(Y, i, "-")
 		
 	if(Y_SPEED < 0):
 		for i in range(Y+1, Y+1+SCORE):
-			stdscr.addstr(i, X, "|")
+			if(i >= MIN_Y and i <= MAX_Y):
+				stdscr.addstr(i, X, "|")
 		
 	if(Y_SPEED > 0):
 		for i in range(Y-SCORE, Y):
-			stdscr.addstr(i, X, "|")
+			if(i >= MIN_Y and i <= MAX_Y):
+				stdscr.addstr(i, X, "|")
 	
+	# head coords
 	string = "x: " + str(X) + "y: " + str(Y) + "        "
 	stdscr.addstr(12,1 , string)
 	
@@ -119,40 +134,26 @@ def draw():
 	draw_food()
 	draw_snake()
 		
-# initscr() returns a window object representing the entire screen;
 stdscr = curses.initscr()
-
-
-#Usually curses applications turn off automatic echoing of keys to the screen, 
-#in order to be able to read keys and only display them under certain circumstances. 
-#This requires calling the noecho() function.
 curses.noecho()
-
-#Applications will also commonly need to react to keys instantly, without requiring the Enter key to be pressed;
-#this is called cbreak mode, as opposed to the usual buffered input mode.
 curses.cbreak()
-
-#Terminals usually return special keys, such as the cursor keys or navigation keys such as Page Up and Home, 
-#as a multibyte escape sequence. While you could write your application to expect such sequences and process them accordingly, 
-#curses can do it for you, returning a special value such as curses.KEY_LEFT.
 stdscr.keypad(1)
+stdscr.nodelay(1)
 
 stdscr.addstr(" use wasd to move or q to quit")
 
-X_SPEED = 0
-Y_SPEED = 0
-tail = "-"
-head = ">"
-stdscr.nodelay(1)
+init_game()
 
-draw_borders()
-spawn_food()
 while(True):
 	
-	if(update() == -1):
+	u = update()
+	if(u == -1):
 		break
+	if(u == 0):
+		init_game()
+		
 	draw()
-	time.sleep(max(0.05, 0.25-(float(SCORE)/100)))
+	time.sleep(max(0.05, 0.2-(float(SCORE)/100)))
 	
 #Terminating a curses application is much easier than starting one. Youll need to call
 curses.nocbreak(); stdscr.keypad(0); curses.echo()
