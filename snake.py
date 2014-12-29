@@ -17,8 +17,8 @@ X_SPEED = 0
 Y_SPEED = 0
 
 def spawn_food():
-	global FOOD_X
-	global FOOD_Y
+	global FOOD_X, FOOD_Y
+
 	FOOD_X = random.randint(MIN_X, MAX_X)
 	FOOD_Y = random.randint(MIN_Y, MAX_Y)
 	
@@ -145,7 +145,6 @@ stdscr.addstr(" use wasd to move or q to quit")
 init_game()
 
 while(True):
-	
 	u = update()
 	if(u == -1):
 		break
@@ -154,10 +153,5 @@ while(True):
 		
 	draw()
 	time.sleep(max(0.05, 0.2-(float(SCORE)/100)))
-	
-#Terminating a curses application is much easier than starting one. Youll need to call
-curses.nocbreak(); stdscr.keypad(0); curses.echo()
 
-#to reverse the curses-friendly terminal settings. 
-#Then call the endwin() function to restore the terminal to its original operating mode.
-curses.endwin()
+curses.nocbreak(); stdscr.keypad(0); curses.echo(); curses.endwin()
