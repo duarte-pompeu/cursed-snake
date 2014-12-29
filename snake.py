@@ -90,7 +90,7 @@ def draw_borders():
 		stdscr.addstr(i, 40, border)
 		
 def draw_score():
-	stdscr.addstr(0, 32, "SCORE: " + str(SCORE))
+	stdscr.addstr(0, 32, "SCORE: " + str(SCORE) + "  ")
 	
 def draw_food():
 	stdscr.addstr(FOOD_Y, FOOD_X, ".")
