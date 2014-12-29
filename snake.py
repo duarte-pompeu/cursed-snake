@@ -10,14 +10,59 @@ MAX_Y = 10
 SCORE = 0
 FOOD_X = 0
 FOOD_Y = 0
+ANGLE = 0
 X = 5
 Y = 5
 X_SPEED = 0
 Y_SPEED = 0
 
-def draw_tail():
-	print "hi"
+def clear_scenario():
+	xlen = MAX_X - MIN_X +1
+	for i in range(MIN_Y, MAX_Y+1):
+		stdscr.addstr(i, MIN_X, " " * xlen)
 
+def update():
+	global X, Y, X_SPEED, Y_SPEED, SCORE, HEAD, ANGLE
+	
+	c = stdscr.getch()
+	if (c == ord('w')):
+		X_SPEED = 0
+		Y_SPEED = -1
+		ANGLE = 1
+		
+	if (c == ord('s')):
+		X_SPEED = 0
+		Y_SPEED = 1
+		ANGLE = 3
+		
+	if (c == ord('a')):
+		Y_SPEED = 0
+		X_SPEED = -1
+		ANGLE = 2
+		
+	if (c == ord('d')):
+		Y_SPEED = 0
+		X_SPEED = 1
+		ANGLE = 0
+		
+	if (c == ord('q')):
+		return -1
+	
+	X+= X_SPEED
+	Y+= Y_SPEED
+	if(Y < MIN_Y):
+		Y = MIN_Y +1
+	if(Y > MAX_Y):
+		Y = MAX_Y -1
+	if(X < MIN_X):
+		X = MIN_X +1
+	if(X > MAX_X):
+		X = MAX_X -1
+		
+	if(X == FOOD_X and Y == FOOD_Y):
+		SCORE += 1
+		spawn_food()
+	
 def draw_borders():
 	border = "#"
 	stdscr.addstr(1,1, border*40)
@@ -39,15 +84,41 @@ def spawn_food():
 	
 def draw_score():
 	stdscr.addstr(0, 32, "SCORE: " + str(SCORE))
-
-def draw_pos(x,y):
-	string = "x: " + str(x) + "y: " + str(y) + "        "
-	stdscr.addstr(12,1 , string)
-
-def draw_food_pos():
+	
+def draw_food():
+	stdscr.addstr(FOOD_Y, FOOD_X, ".")
 	string = "x: " + str(FOOD_X) + "y: " + str(FOOD_Y) + "s        "
 	stdscr.addstr(12, 20, string)
+
+def draw_snake():
+	#head
+	head = ">^<v"[ANGLE]
+	stdscr.addstr(Y,X, head)
 	
+	#tail
+	if(X_SPEED > 0):
+		stdscr.addstr(Y, X-X_SPEED*SCORE, "-"*SCORE)
+	if(X_SPEED < 0):
+		stdscr.addstr(Y, X+1, "-"*SCORE)
+		
+	if(Y_SPEED < 0):
+		for i in range(Y+1, Y+1+SCORE):
+			stdscr.addstr(i, X, "|")
+		
+	if(Y_SPEED > 0):
+		for i in range(Y-SCORE, Y):
+			stdscr.addstr(i, X, "|")
+	
+	string = "x: " + str(X) + "y: " + str(Y) + "        "
+	stdscr.addstr(12,1 , string)
+	
+def draw():
+	clear_scenario()
+	draw_borders()
+	draw_score()
+	draw_food()
+	draw_snake()
+		
 # initscr() returns a window object representing the entire screen;
 stdscr = curses.initscr()
 
@@ -68,7 +139,6 @@ stdscr.keypad(1)
 
 stdscr.addstr(" use wasd to move or q to quit")
 
-
 X_SPEED = 0
 Y_SPEED = 0
 tail = "-"
@@ -76,59 +146,14 @@ head = ">"
 stdscr.nodelay(1)
 
 draw_borders()
-draw_score()
 spawn_food()
 while(True):
 	
-	c = stdscr.getch()
-	if (c == ord('w')):
-		X_SPEED = 0
-		Y_SPEED = -1
-		head = "^"
-		
-	if (c == ord('s')):
-		X_SPEED = 0
-		Y_SPEED = 1
-		head = "v"
-		
-	if (c == ord('a')):
-		Y_SPEED = 0
-		X_SPEED = -1
-		head = "<"
-		
-	if (c == ord('d')):
-		Y_SPEED = 0
-		X_SPEED = 1
-		head = ">"
-		
-	if (c == ord('q')):
+	if(update() == -1):
 		break
-	
-	stdscr.addstr(Y, X, " ")
-	X+= X_SPEED
-	Y+= Y_SPEED
-	if(Y < MIN_Y):
-		Y = MIN_Y +1
-	if(Y > MAX_Y):
-		Y = MAX_Y -1
-	if(X < MIN_X):
-		X = MIN_X +1
-	if(X > MAX_X):
-		X = MAX_X -1
-		
-	stdscr.addstr(Y,X, head)
-	
-	if(X == FOOD_X and Y == FOOD_Y):
-		SCORE += 1
-		draw_score()
-		spawn_food()
-		
-	draw_pos(X,Y)
-	draw_food_pos()
-	stdscr.refresh()
+	draw()
 	time.sleep(max(0.05, 0.25-(float(SCORE)/100)))
 	
-
 #Terminating a curses application is much easier than starting one. Youll need to call
 curses.nocbreak(); stdscr.keypad(0); curses.echo()
 
