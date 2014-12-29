@@ -26,7 +26,7 @@ def spawn_food():
 	FOOD_X = random.randint(MIN_X, MAX_X)
 	FOOD_Y = random.randint(MIN_Y, MAX_Y)
 	
-	food_types = "qwertyuiopasdfghjklzxcvbnm"
+	food_types = ".,@$%"
 	food_type = food_types[random.randint(0,len(food_types)-1)]
 	stdscr.addstr(FOOD_Y, FOOD_X, food_type)
 	
@@ -119,7 +119,7 @@ while(True):
 	draw_pos(x,y)
 	draw_food_pos()
 	stdscr.refresh()
-	time.sleep(max(0.05, 0.25-(float(SCORE)/10)))
+	time.sleep(max(0.05, 0.25-(float(SCORE)/100)))
 	
 
 #Terminating a curses application is much easier than starting one. Youll need to call
