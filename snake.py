@@ -10,6 +10,13 @@ MAX_Y = 10
 SCORE = 0
 FOOD_X = 0
 FOOD_Y = 0
+X = 5
+Y = 5
+X_SPEED = 0
+Y_SPEED = 0
+
+def draw_tail():
+	print "hi"
 
 def draw_borders():
 	border = "#"
@@ -60,11 +67,10 @@ curses.cbreak()
 stdscr.keypad(1)
 
 stdscr.addstr(" use wasd to move or q to quit")
-y = 5;
-x = 5;
 
-xdiff = 0
-ydiff = 0
+
+X_SPEED = 0
+Y_SPEED = 0
 tail = "-"
 head = ">"
 stdscr.nodelay(1)
@@ -76,47 +82,48 @@ while(True):
 	
 	c = stdscr.getch()
 	if (c == ord('w')):
-		xdiff = 0
-		ydiff = -1
+		X_SPEED = 0
+		Y_SPEED = -1
 		head = "^"
 		
 	if (c == ord('s')):
-		xdiff = 0
-		ydiff = 1
+		X_SPEED = 0
+		Y_SPEED = 1
 		head = "v"
 		
 	if (c == ord('a')):
-		ydiff = 0
-		xdiff = -1
+		Y_SPEED = 0
+		X_SPEED = -1
 		head = "<"
 		
 	if (c == ord('d')):
-		ydiff = 0
-		xdiff = 1
+		Y_SPEED = 0
+		X_SPEED = 1
 		head = ">"
 		
 	if (c == ord('q')):
 		break
 	
-	stdscr.addstr(y,x, " ")
-	x+= xdiff
-	y+= ydiff
-	if(y < MIN_Y):
-		y = MIN_Y +1
-	if(y > MAX_Y):
-		y = MAX_Y -1
-	if(x < MIN_X):
-		x = MIN_X +1
-	if(x > MAX_X):
-		x = MAX_X -1
-	stdscr.addstr(y,x, head)
+	stdscr.addstr(Y, X, " ")
+	X+= X_SPEED
+	Y+= Y_SPEED
+	if(Y < MIN_Y):
+		Y = MIN_Y +1
+	if(Y > MAX_Y):
+		Y = MAX_Y -1
+	if(X < MIN_X):
+		X = MIN_X +1
+	if(X > MAX_X):
+		X = MAX_X -1
+		
+	stdscr.addstr(Y,X, head)
 	
-	if(x == FOOD_X and y == FOOD_Y):
+	if(X == FOOD_X and Y == FOOD_Y):
 		SCORE += 1
 		draw_score()
 		spawn_food()
 		
-	draw_pos(x,y)
+	draw_pos(X,Y)
 	draw_food_pos()
 	stdscr.refresh()
 	time.sleep(max(0.05, 0.25-(float(SCORE)/100)))
