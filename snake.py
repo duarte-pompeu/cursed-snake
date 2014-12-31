@@ -141,7 +141,6 @@ stdscr.keypad(1)
 stdscr.nodelay(1)
 
 stdscr.addstr(" use wasd to move or q to quit")
-
 init_game()
 
 while(True):
