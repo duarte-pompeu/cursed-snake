@@ -34,7 +34,7 @@ class Snake:
 
 
 	def draw(self):
-		draw_cur(self.getX(), self.getY(), ">")
+		draw_cur(self.getX(), self.getY(), "$")
 		
 		for piece in self.body_parts[1:]:
 			draw_cur(piece.x, piece.y, "=")
