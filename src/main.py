@@ -3,18 +3,24 @@ from snake import *
 import time
 
 def main():
-	snake = init_game()
-	init_curses(10, 10)
+	try:
+		snake = init_game()
+		init_curses(10, 10)
 
-	while(True):
-		if check_input(snake) == -1:
-			break
+		while(True):
+			if check_input(snake) == -1:
+				break
 
-		snake.update()
-		draw(snake)
-		time.sleep(0.5)
+			snake.update()
+			draw(snake)
+			time.sleep(0.5)
 
-	close_curses()
+	except Exception, e:
+		close_curses()
+		print e
+
+	finally:
+		close_curses()
 
 
 def init_game():
