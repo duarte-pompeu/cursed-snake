@@ -63,6 +63,24 @@ def close_curses():
 def clear_screen():
 	stdscr.clear()
 
+def draw_window(x1,y1,x2,y2):
+	line = "#"* (x2-x1)
+	col = "#\n" * (y2-y1)
+
+	draw_cur(x1,y1, line)
+	draw_cur(x1,y2, line)
+
+	for i in xrange(y1,y2+1):
+		draw_cur(x1,i, "#")
+		draw_cur(x2,i, "#")
+
+def draw_window_y(y1, y2):
+	x1 = 0
+	x2 = X_LIM
+
+	draw_window(x1, y1, x2-1, y2)
+		
+
 def draw_cur(x, y, msg):
 	real_x = x
 	real_y = Y_LIM - y
