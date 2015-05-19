@@ -28,17 +28,38 @@ class Snake:
 	def size(self):
 		return len(self.body_parts)
 
+
+	def draw(self):
+		head_symbol = self.get_head_symbol()
+		draw_cur(self.getX(), self.getY(), head_symbol)
+		
+		for piece in self.body_parts[1:]:
+			draw_cur(piece.x, piece.y, "=")
+
+	def get_head_symbol(self):
+		speed_x = self.getSpeedX()
+		speed_y = self.getSpeedY()
+		
+		if speed_x > 0:
+			return ">"
+
+		elif speed_x < 0:
+			return "<"
+
+		elif speed_y > 0:
+			return "^"
+
+		elif speed_y < 0:
+			return "V"
+
+
+
 	def toString(self):
 		msg = "SNAKE size: %d\n" % self.size()
 		msg += "pos: (%s) $ speed (%s)" %(self.position.toString(), self.speed.toString())
 
+		return msg
 
-	def draw(self):
-		draw_cur(self.getX(), self.getY(), "$")
-		
-		for piece in self.body_parts[1:]:
-			draw_cur(piece.x, piece.y, "=")
-		
 
 	def getX(self):
 		return self.position.x
@@ -47,4 +68,10 @@ class Snake:
 	def getY(self):
 		return self.position.y
 
-		return msg
+	def getSpeedX(self):
+		return self.speed.x
+
+	def getSpeedY(self):
+		return self.speed.y
+
+		
