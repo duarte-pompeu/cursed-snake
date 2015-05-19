@@ -118,6 +118,13 @@ class Vec2:
 		self.x += vec2.x
 		self.y += vec2.y
 
+
+	def getCopy(self):
+		return Vec2(self.x,self.y)
+
+	def equals(self, other):
+		return self.x == other.x and self.y == other.y
+	
 	def toString(self):
 		return "x: %d, y: %d" %(self.x,self.y)
 
