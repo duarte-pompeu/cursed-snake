@@ -7,9 +7,9 @@ class Vec2:
 		self.y = y
 
 
-	def toString(self):
-		return "x: %d, y: %d" %(self.x,self.y)
-
 	def add(self, vec2):
 		self.x += vec2.x
 		self.y += vec2.y
+
+	def toString(self):
+		return "x: %d, y: %d" %(self.x,self.y)

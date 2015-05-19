@@ -11,6 +11,7 @@ class Snake:
 		self.body_parts.append(self.position)
 		
 		self.turning_points = list()
+		self.turning_points.append(self.position)
 
 
 	def turn(self, x,y):
@@ -18,7 +19,7 @@ class Snake:
 		self.speed.y = y
 
 	def update(self):
-		self.position.add( self.speed )
+		self.position.add(self.speed)
 
 	def size(self):
 		return len(self.body_parts)
