@@ -28,4 +28,10 @@ class Snake:
 		msg = "SNAKE size: %d\n" % self.size()
 		msg += "pos: (%s) $ speed (%s)" %(self.position.toString(), self.speed.toString())
 
+	def getX(self):
+		return self.position.x
+
+	def getY(self):
+		return self.position.y
+
 		return msg
