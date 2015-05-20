@@ -42,18 +42,30 @@ class Snake:
 		
 
 	def turn(self, x,y):
-		for piece in self.body:
-			piece.setSpeed(x,y)
-			
-		#self.turning_points.append(-1)
+		self.turning_points.append(0)
+
+		head = self.body[0]
+		head.setSpeed(x,y)
+
 
 
 	def update(self):
 		body = self.body
+		turns = self.turning_points
+
+		head = body[0]
+		head.update()
 		
-		for i in xrange(0, len(body)):
+		for i in xrange(1, len(body)):
 			piece = body[i]
+
+			if i in turns:
+				piece.speed = body[i-1].speed
+			
 			piece.update()
+
+		for i in xrange(0, len(turns)):
+			turns[i] += 1
 
 	def size(self):
 		return len(self.body)
