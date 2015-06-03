@@ -1,9 +1,9 @@
-#!/usr/bin/python
+#!/usr/bin/python2
 from lib_common import *
 
 class Piece:
 
-	def __init__(self, x=0, y=0, speed_x=0, speed_y=0):
+	def __init__(self, x=0, y=0, speed_x=1, speed_y=0):
 		self.position = Vec2(x,y)
 		self.speed = Vec2(speed_x, speed_y)
 
@@ -66,6 +66,8 @@ class Snake:
 
 		for i in xrange(0, len(turns)):
 			turns[i] += 1
+			//TODO: pop the turn once it surpasses snake length
+			
 
 	def size(self):
 		return len(self.body)
