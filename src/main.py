@@ -17,8 +17,8 @@ def main():
 
 	except Exception, e:
 		close_curses()
-		print e
-
+		raise
+		
 	finally:
 		close_curses()
 
