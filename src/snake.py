@@ -66,7 +66,7 @@ class Snake:
 
 		for i in xrange(0, len(turns)):
 			turns[i] += 1
-			//TODO: pop the turn once it surpasses snake length
+			#TODO: pop the turn once it surpasses snake length
 			
 
 	def size(self):
