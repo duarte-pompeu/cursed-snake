@@ -48,6 +48,10 @@ class Snake:
 		if head.getSpeedX() is x and head.getSpeedY() is y:
 			return
 			
+		# or the opposite - snake doesnt go back
+		if head.getSpeedX() is -x and head.getSpeedY() is -y:
+			return
+			
 		self.turning_points.append(0)
 		head.setSpeed(x,y)
 
