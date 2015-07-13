@@ -5,8 +5,7 @@ import time
 
 def main():
 	try:
-		#xlimit, ylimit = 50,50
-		xlimit, ylimit = init_curses(100,30)
+		xlimit, ylimit = init_curses(50,50)
 		
 		global world
 		world = World(0,xlimit,0,ylimit)
@@ -17,7 +16,7 @@ def main():
 
 			world.update()
 			world.draw()
-			time.sleep(0.5)
+			time.sleep(0.1)
 
 	except Exception, e:
 		close_curses()

@@ -74,7 +74,7 @@ class Snake:
 		for i in xrange(0, len(turns)):
 			turns[i] += 1
 		
-		# tODO : pop up turns
+		# TODO : pop up turns
 		# its kind of tricky to do so - reduce a list size while you iterate it
 			
 	def size(self):

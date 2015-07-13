@@ -23,6 +23,7 @@ def init_curses(x_limit, y_limit):
 	curses.use_env(True)
 	Y_TERM_LIM, X_TERM_LIM = stdscr.getmaxyx()
 	X_LIM, Y_LIM = X_TERM_LIM, Y_TERM_LIM
+	#~ X_LIM, Y_LIM = x_limit, y_limit
 
 	time.sleep(1)
 	
@@ -39,19 +40,17 @@ def check_input(world):
 	global stdscr
 	c = stdscr.getch()
 	
-	snake = world.snake
-
 	if c == ord('w'):
-		snake.turn(0,1)
+		world.turn(0,1)
 
 	elif c == ord('a'):
-		snake.turn(-1,0)
+		world.turn(-1,0)
 
 	elif c == ord('s'):
-		snake.turn(0,-1)
+		world.turn(0,-1)
 
 	elif c == ord('d'):
-		snake.turn(1,0)
+		world.turn(1,0)
 		
 	elif c == ord('q'):
 		return -1
@@ -89,17 +88,11 @@ def draw_cur(x, y, msg):
 	real_x = x
 	real_y = Y_LIM - y
 
-	if real_x < 0:
-		real_x = 0
+	if real_x < 0 or real_x > X_LIM:
+		return
 
-	if real_x > X_LIM:
-		real_x = X_LIM
-
-	if real_y < 0:
-		real_y = 0
-
-	if real_y > Y_LIM:
-		real_y = Y_LIM
+	if real_y < 0 or real_y > Y_LIM:
+		return
 	
 	try:
 		stdscr.addstr(real_y, real_x, msg)
