@@ -21,9 +21,8 @@ def init_curses(x_limit, y_limit):
 	stdscr = curses.initscr()
 
 	curses.use_env(True)
-	Y_LIM, X_LIM = stdscr.getmaxyx()
-
-	print X_LIM, Y_LIM
+	Y_TERM_LIM, X_TERM_LIM = stdscr.getmaxyx()
+	X_LIM, Y_LIM = X_TERM_LIM, Y_TERM_LIM
 
 	time.sleep(1)
 	
@@ -31,11 +30,16 @@ def init_curses(x_limit, y_limit):
 	curses.cbreak()
 	stdscr.keypad(1)
 	stdscr.nodelay(1)
+	
+	return X_LIM, Y_LIM
 
 
-def check_input(snake):
+def check_input(world):
+	
 	global stdscr
 	c = stdscr.getch()
+	
+	snake = world.snake
 
 	if c == ord('w'):
 		snake.turn(0,1)
