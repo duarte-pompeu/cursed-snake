@@ -139,7 +139,7 @@ class Snake:
 		
 	def eat(self, food):
 		food.snake_i = 0
-		self.food.append(food)
+		self.food.insert(0, food)
 
 
 	def draw(self):
