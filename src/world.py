@@ -28,13 +28,13 @@ class World:
 	def restart(self):
 		self.snake = Snake(self,10,10, 5)
 		self.turn_direction = 0
+		self.foods = []
 		self.spawn_random_food()
 		self.score = 0
 		
 		
 	def update(self):
 		snake = self.snake
-		food = self.food
 		
 		if(self.turn_direction != 0):
 			x = self.turn_direction.x
@@ -49,11 +49,13 @@ class World:
 		if snake.getY() < self.y1 or snake.getY() > self.y2 or snake.getX() < self.x1 or snake.getX() > self.x2:
 			self.game_over()
 		
-		if snake.getX() == food.position.x and snake.getY() == food.position.y:
-			self.score_up()
+		for food in self.foods:
+			if snake.getX() == food.position.x and snake.getY() == food.position.y:
+				self.score_up(food)
 
-	def score_up(self):
-		self.snake.eat(self.food)
+	def score_up(self, food):
+		self.foods.remove(food)
+		self.snake.eat(food)
 		self.score += 1
 		self.spawn_random_food()
 		
@@ -64,7 +66,9 @@ class World:
 		draw_window(self.x1-1,self.y1-1,self.x2+1,self.y2+1)
 		
 		self.snake.draw()
-		self.food.draw()
+		
+		for food in self.foods:
+			food.draw()
 		
 	def spawn_random_food(self):
 		x = random.randint(self.x1+1,self.x2-1)
@@ -72,8 +76,16 @@ class World:
 		self.spawn_food(x,y)
 		
 	def spawn_food(self, x, y):
-		self.food = Food(x,y)
+		self.foods.insert(0,Food(x,y))
 	
 	def turn(self,x,y):
 		self.turn_direction = Vec2(x,y)
+		
+	def spawn_food_test(self):
+		self.spawn_food(15,10)
+		self.spawn_food(16,10)
+		self.spawn_food(17,10)
+		self.spawn_food(18,10)
+		self.spawn_food(19,10)
+		self.spawn_food(20,10)
 	

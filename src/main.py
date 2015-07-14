@@ -12,9 +12,7 @@ def main():
 		
 		global world
 		world = World(1,X_LIMIT-2,7,Y_LIMIT-1)
-		
-		# TEST food values
-		world.spawn_food(20,10)
+		world.spawn_food_test()
 
 		while(True):
 			if check_input(world) == -1:
