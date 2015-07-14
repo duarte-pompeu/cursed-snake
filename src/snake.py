@@ -147,7 +147,10 @@ class Snake:
 
 
 	def draw(self):
-		self.draw_head()
+		if any (food.snake_i == 0 for food in self.food):
+			self.draw_head_eating()
+		
+		else: self.draw_head()
 		
 		for i in xrange(1,len(self.body)):
 			piece = self.body[i]
@@ -164,8 +167,10 @@ class Snake:
 
 
 	def draw_head(self):
-		self.body[0].draw( "^<V>")
+		self.body[0].draw("^<V>")
 
+	def draw_head_eating(self):
+		self.body[0].draw("V>^<")
 
 	def toString(self):
 		msg = "SNAKE size: %d\n" % self.size()

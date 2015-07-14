@@ -25,6 +25,7 @@ def init_curses(x_limit, y_limit):
 	
 	curses.noecho()
 	curses.cbreak()
+	curses.curs_set(0)
 	stdscr.keypad(1)
 	stdscr.nodelay(1)
 	
