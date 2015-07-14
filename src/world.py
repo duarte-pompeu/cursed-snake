@@ -25,13 +25,11 @@ class World:
 		
 		self.restart()
 		
-		
-		
-		
 	def restart(self):
 		self.snake = Snake(self,10,10, 5)
 		self.turn_direction = 0
 		self.spawn_food()
+		self.score = 0
 		
 		
 	def update(self):
@@ -52,9 +50,10 @@ class World:
 			self.game_over()
 		
 		if snake.getX() == food.position.x and snake.getY() == food.position.y:
-			self.score()
+			self.score_up()
 
-	def score(self):
+	def score_up(self):
+		self.score += 1
 		self.spawn_food()
 		
 	def game_over(self):

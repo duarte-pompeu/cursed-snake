@@ -39,9 +39,11 @@ def draw():
 def draw_pannel():
 	y = 5
 	draw_window_y(1, y)
-	draw_cur(2, y-1, " use wasd to move or q to quit")
+	msg = "SCORE: " + str(world.score)
+	draw_cur(2, y-1, msg)
+	draw_cur(2, y-2, "use wasd to move or q to quit")
 	limits_msg = "WINDOW LIMITS: " + str(X_LIMIT) + ":" + str(Y_LIMIT)
-	draw_cur(2, y-2, limits_msg)
+	draw_cur(2, y-3, limits_msg)
 
 
 if __name__ == "__main__":
