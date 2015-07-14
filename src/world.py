@@ -29,7 +29,7 @@ class World:
 		
 		
 	def restart(self):
-		self.snake = Snake(10,10, 5)
+		self.snake = Snake(self,10,10, 5)
 		self.turn_direction = 0
 		self.spawn_food()
 		
@@ -67,8 +67,8 @@ class World:
 		self.food.draw()
 		
 	def spawn_food(self):
-		x = random.randint(self.x1,self.x2)
-		y = random.randint(6,self.y2)
+		x = random.randint(self.x1+1,self.x2-1)
+		y = random.randint(self.y1+1,self.y2-1)
 		
 		self.food = Food(x,y)
 	

@@ -29,7 +29,9 @@ class Piece:
 	
 class Snake:
 	
-	def __init__(self, x=0, y=0, size=0):
+	def __init__(self, world, x=0, y=0, size=0):
+		self.world = world
+		
 		head = Piece(x,y)
 
 		self.body = list()
@@ -73,10 +75,22 @@ class Snake:
 
 		for i in xrange(0, len(turns)):
 			turns[i] += 1
+			
+		self.check_self_collision()
 		
 		# TODO : pop up turns
 		# its kind of tricky to do so - reduce a list size while you iterate it
+	
+	def check_self_collision(self):
+		body = self.body
+		
+		for i in xrange(1, len(body)):
+			piece = body[i]
 			
+			if self.getX() is piece.position.x and self.getY() is piece.position.y:
+				self.world.game_over()
+				break
+				
 	def size(self):
 		return len(self.body)
 
