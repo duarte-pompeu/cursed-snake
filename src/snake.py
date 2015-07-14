@@ -6,6 +6,7 @@ class Piece:
 	def __init__(self, x=0, y=0, speed_x=1, speed_y=0):
 		self.position = Vec2(x,y)
 		self.speed = Vec2(speed_x, speed_y)
+		self.snake_i = -1
 		
 	def draw(self, shapes="|-|-"):
 		speed_x = self.getSpeedX()
@@ -103,10 +104,24 @@ class Snake:
 		# its kind of tricky to do so - reduce a list size while you iterate it
 			
 		for i in xrange(0, len(food)):
-			food[i] += 1
+			f = food[i]
+			f.snake_i += 1
+			
+			if f.snake_i == len(body):
+				food.pop(i)
+				self.grow(f)
+				
 			
 		self.check_self_collision()
+	
+	def grow(self, food):
+		x = food.position.x
+		y = food.position.y
 		
+		new_piece = Piece(x,y)
+		new_piece.speed = self.body[-1].speed.getCopy()
+		
+		self.body.append(new_piece)
 
 	def check_self_collision(self):
 		body = self.body
@@ -123,7 +138,8 @@ class Snake:
 		return len(self.body)
 		
 	def eat(self, food):
-		self.food.append(0)
+		food.snake_i = 0
+		self.food.append(food)
 
 
 	def draw(self):
@@ -132,7 +148,9 @@ class Snake:
 		for i in xrange(1,len(self.body)):
 			piece = self.body[i]
 			
-			for food_pos in self.food:
+			for food in self.food:
+				food_pos = food.snake_i
+				
 				if food_pos == i:
 					piece.draw(""""="=""")
 					break
