@@ -77,7 +77,7 @@ class Snake:
 		if head.getSpeedX() is -x and head.getSpeedY() is -y:
 			return
 			
-		self.turning_points.append(0)
+		self.turning_points.insert(0,0)
 		head.setSpeed(x,y)
 
 
@@ -99,7 +99,9 @@ class Snake:
 
 		for i in xrange(0, len(turns)):
 			turns[i] += 1
-			
+		
+		if turns and turns[-1] == len(body):
+			turns.pop()
 		# TODO : pop up turns and food
 		# its kind of tricky to do so - reduce a list size while you iterate it
 			

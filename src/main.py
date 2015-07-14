@@ -11,8 +11,7 @@ def main():
 		X_LIMIT, Y_LIMIT = init_curses(50,50)
 		
 		global world
-		world = World(1,X_LIMIT-2,7,Y_LIMIT-1)
-		world.spawn_food_test()
+		world = World(1,min(30, X_LIMIT-2),7,min(Y_LIMIT-1, 20))
 
 		while(True):
 			if check_input(world) == -1:
@@ -43,8 +42,10 @@ def draw_pannel():
 	msg = "SCORE: " + str(world.score)
 	draw_cur(2, y-1, msg)
 	draw_cur(2, y-2, "use wasd to move or q to quit")
-	limits_msg = "WINDOW LIMITS: " + str(X_LIMIT) + ":" + str(Y_LIMIT)
-	draw_cur(2, y-3, limits_msg)
+	dev_log = "[DEVLOG]"
+	dev_log += " WINDOW LIMITS: " + str(X_LIMIT) + ":" + str(Y_LIMIT)
+	dev_log += " SNAKE TURNS: " + str(len(world.snake.turning_points))
+	draw_cur(2, y-3, dev_log)
 
 
 if __name__ == "__main__":
