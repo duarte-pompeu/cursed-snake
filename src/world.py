@@ -42,11 +42,7 @@ class World:
 			self.spawn_food()
 
 	def draw(self):
-		clear_screen()
-		draw_window_y(1, 5)
-		draw_cur(2, 4, " use wasd to move or q to quit")
-		limits_msg = " LIMITS: " + str(self.x2) + ":" + str(self.y2)
-		draw_cur(2, 3, limits_msg)
+		#~ draw_window(self.x1+1,self.x2,self.y1,self.y2)
 		
 		self.snake.draw()
 		self.food.draw()

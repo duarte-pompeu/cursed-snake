@@ -7,23 +7,19 @@ import time
 # CURSES #
 ##########
 
-X_LIM = 0
-Y_LIM = 0
 
 X_TERM_LIM = 0
 Y_TERM_LIM = 0
 
 
 def init_curses(x_limit, y_limit):
-	global X_LIM, Y_LIM
+	global X_TERM_LIM, Y_TERM_LIM
 	
 	global stdscr
 	stdscr = curses.initscr()
 
 	curses.use_env(True)
 	Y_TERM_LIM, X_TERM_LIM = stdscr.getmaxyx()
-	X_LIM, Y_LIM = X_TERM_LIM, Y_TERM_LIM
-	#~ X_LIM, Y_LIM = x_limit, y_limit
 
 	time.sleep(1)
 	
@@ -32,7 +28,7 @@ def init_curses(x_limit, y_limit):
 	stdscr.keypad(1)
 	stdscr.nodelay(1)
 	
-	return X_LIM, Y_LIM
+	return X_TERM_LIM, Y_TERM_LIM
 
 
 def check_input(world):
@@ -79,19 +75,19 @@ def draw_window(x1,y1,x2,y2):
 
 def draw_window_y(y1, y2):
 	x1 = 0
-	x2 = X_LIM
+	x2 = X_TERM_LIM
 
 	draw_window(x1, y1, x2-1, y2)
 		
 
 def draw_cur(x, y, msg):
 	real_x = x
-	real_y = Y_LIM - y
+	real_y = Y_TERM_LIM - y
 
-	if real_x < 0 or real_x > X_LIM:
+	if real_x < 0 or real_x > X_TERM_LIM:
 		return
 
-	if real_y < 0 or real_y > Y_LIM:
+	if real_y < 0 or real_y > Y_TERM_LIM:
 		return
 	
 	try:

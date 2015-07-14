@@ -3,19 +3,22 @@ from snake import *
 from world import *
 import time
 
+X_LIMIT, Y_LIMIT = 0,0
+
 def main():
+	global X_LIMIT, Y_LIMIT
 	try:
-		xlimit, ylimit = init_curses(50,50)
+		X_LIMIT, Y_LIMIT = init_curses(50,50)
 		
 		global world
-		world = World(0,xlimit,0,ylimit)
+		world = World(1,X_LIMIT,6,Y_LIMIT)
 
 		while(True):
 			if check_input(world) == -1:
 				break
 
-			world.update()
-			world.draw()
+			update()
+			draw()
 			time.sleep(0.1)
 
 	except Exception, e:
@@ -24,6 +27,21 @@ def main():
 		
 	finally:
 		close_curses()
+		
+def update():
+	world.update()
+	
+def draw():
+	clear_screen()
+	draw_pannel()
+	world.draw()
+	
+def draw_pannel():
+	y = 5
+	draw_window_y(1, y)
+	draw_cur(2, y-1, " use wasd to move or q to quit")
+	limits_msg = "WINDOW LIMITS: " + str(X_LIMIT) + ":" + str(Y_LIMIT)
+	draw_cur(2, y-2, limits_msg)
 
 
 if __name__ == "__main__":
