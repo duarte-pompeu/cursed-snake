@@ -17,16 +17,26 @@ class Food:
 class World:
 	
 	def __init__(self, x1, x2, y1, y2):
-		self.snake = Snake(10,10, 5)
+		
 		self.x1 = x1
 		self.x2 = x2
 		self.y1 = y1
 		self.y2 = y2
-		self.turn_direction = 0
 		
+		self.restart()
+		
+		
+		
+		
+	def restart(self):
+		self.snake = Snake(10,10, 5)
+		self.turn_direction = 0
 		self.spawn_food()
 		
+		
 	def update(self):
+		snake = self.snake
+		food = self.food
 		
 		if(self.turn_direction != 0):
 			x = self.turn_direction.x
@@ -36,13 +46,22 @@ class World:
 			self.turn_direction = 0
 			
 		
-		self.snake.update()
+		snake.update()
 		
-		if self.snake.getX() == self.food.position.x and self.snake.getY() == self.food.position.y:
-			self.spawn_food()
+		if snake.getY() < self.y1 or snake.getY() > self.y2 or snake.getX() < self.x1 or snake.getX() > self.x2:
+			self.game_over()
+		
+		if snake.getX() == food.position.x and snake.getY() == food.position.y:
+			self.score()
 
+	def score(self):
+		self.spawn_food()
+		
+	def game_over(self):
+		self.restart()
+	
 	def draw(self):
-		#~ draw_window(self.x1+1,self.x2,self.y1,self.y2)
+		draw_window(self.x1-1,self.y1-1,self.x2+1,self.y2+1)
 		
 		self.snake.draw()
 		self.food.draw()

@@ -11,7 +11,7 @@ def main():
 		X_LIMIT, Y_LIMIT = init_curses(50,50)
 		
 		global world
-		world = World(1,X_LIMIT,6,Y_LIMIT)
+		world = World(1,X_LIMIT-2,7,Y_LIMIT-1)
 
 		while(True):
 			if check_input(world) == -1:
