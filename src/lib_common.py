@@ -121,6 +121,10 @@ class Vec2:
 	def toString(self):
 		return "x: %d, y: %d" %(self.x,self.y)
 
+class Turn:
+	def __init__(self, speedX=0, speedY=0, index=0):
+		self.speed = Vec2(speedX, speedY)
+		self.index = index
 
 
 if __name__ == "__main__":
