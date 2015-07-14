@@ -53,6 +53,7 @@ class World:
 			self.score_up()
 
 	def score_up(self):
+		self.snake.eat(self.food)
 		self.score += 1
 		self.spawn_food()
 		

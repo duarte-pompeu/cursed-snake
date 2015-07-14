@@ -6,6 +6,27 @@ class Piece:
 	def __init__(self, x=0, y=0, speed_x=1, speed_y=0):
 		self.position = Vec2(x,y)
 		self.speed = Vec2(speed_x, speed_y)
+		
+	def draw(self, shapes="|-|-"):
+		speed_x = self.getSpeedX()
+		speed_y = self.getSpeedY()
+
+		if speed_x is 0 and speed_y is 0:
+			shape = shapes[3]
+		
+		elif speed_x > 0:
+			shape = shapes[3]
+
+		elif speed_x < 0:
+			shape = shapes[1]
+
+		elif speed_y > 0:
+			shape = shapes[0]
+
+		elif speed_y < 0:
+			shape = shapes[2]
+			
+		draw_cur(self.getX(), self.getY(), shape)
 
 	def update(self):
 		self.position.add(self.speed)
@@ -41,6 +62,7 @@ class Snake:
 			self.body.append(Piece(x-i, y))
 			
 		self.turning_points = list()
+		self.food = list()
 		
 
 	def turn(self, x,y):
@@ -61,6 +83,7 @@ class Snake:
 	def update(self):
 		body = self.body
 		turns = self.turning_points
+		food = self.food
 
 		head = body[0]
 		head.update()
@@ -76,11 +99,15 @@ class Snake:
 		for i in xrange(0, len(turns)):
 			turns[i] += 1
 			
+		# TODO : pop up turns and food
+		# its kind of tricky to do so - reduce a list size while you iterate it
+			
+		for i in xrange(0, len(food)):
+			food[i] += 1
+			
 		self.check_self_collision()
 		
-		# TODO : pop up turns
-		# its kind of tricky to do so - reduce a list size while you iterate it
-	
+
 	def check_self_collision(self):
 		body = self.body
 		
@@ -90,46 +117,32 @@ class Snake:
 			if self.getX() is piece.position.x and self.getY() is piece.position.y:
 				self.world.game_over()
 				break
+
 				
 	def size(self):
 		return len(self.body)
+		
+	def eat(self, food):
+		self.food.append(0)
 
 
 	def draw(self):
 		self.draw_head()
 		
-		for piece in self.body[1:]:
-			self.draw_body_piece(piece)
+		for i in xrange(1,len(self.body)):
+			piece = self.body[i]
+			
+			for food_pos in self.food:
+				if food_pos == i:
+					piece.draw(""""="=""")
+					break
+			
+			else:
+				piece.draw()
 
 
 	def draw_head(self):
-		self.draw_piece(self.body[0], "^<V>")
-	
-	
-	def draw_body_piece(self, piece):
-		self.draw_piece(piece, "|-|-")
-		
-		
-	def draw_piece(self, piece, shapes):
-		speed_x = piece.getSpeedX()
-		speed_y = piece.getSpeedY()
-
-		if speed_x is 0 and speed_y is 0:
-			shape = shapes[3]
-		
-		elif speed_x > 0:
-			shape = shapes[3]
-
-		elif speed_x < 0:
-			shape = shapes[1]
-
-		elif speed_y > 0:
-			shape = shapes[0]
-
-		elif speed_y < 0:
-			shape = shapes[2]
-			
-		draw_cur(piece.getX(), piece.getY(), shape)
+		self.body[0].draw( "^<V>")
 
 
 	def toString(self):
