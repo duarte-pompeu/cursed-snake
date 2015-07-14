@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import random
+from collections import deque
 from lib_common import *
 from snake import *
 
@@ -28,7 +29,7 @@ class World:
 	def restart(self):
 		self.snake = Snake(self,10,10, 5)
 		self.turn_direction = 0
-		self.foods = []
+		self.foods = deque()
 		self.spawn_random_food()
 		self.score = 0
 		
@@ -52,6 +53,8 @@ class World:
 		for food in self.foods:
 			if snake.getX() == food.position.x and snake.getY() == food.position.y:
 				self.score_up(food)
+				# without break, exception is raiseddue to deque size changing mid-loop 
+				break
 
 	def score_up(self, food):
 		self.foods.remove(food)
@@ -76,7 +79,7 @@ class World:
 		self.spawn_food(x,y)
 		
 	def spawn_food(self, x, y):
-		self.foods.insert(0,Food(x,y))
+		self.foods.appendleft(Food(x,y))
 	
 	def turn(self,x,y):
 		self.turn_direction = Vec2(x,y)

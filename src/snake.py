@@ -1,4 +1,5 @@
 #!/usr/bin/python2
+from collections import deque
 from lib_common import *
 
 class Piece:
@@ -62,8 +63,8 @@ class Snake:
 		for i in xrange(1, size+1):
 			self.body.append(Piece(x-i, y))
 			
-		self.turning_points = list()
-		self.food = list()
+		self.turning_points = deque()
+		self.food = deque()
 		
 
 	def turn(self, x,y):
@@ -79,7 +80,7 @@ class Snake:
 			
 		
 		head.setSpeed(x,y)
-		self.turning_points.insert(0, Turn(self.getSpeedX(), self.getSpeedY()))
+		self.turning_points.appendleft(Turn(self.getSpeedX(), self.getSpeedY()))
 
 
 	def update(self):
@@ -112,7 +113,7 @@ class Snake:
 			f.snake_i += 1
 			
 			if f.snake_i == len(body):
-				food.pop(i)
+				food.pop()
 				self.grow(f)
 				
 			
@@ -143,7 +144,7 @@ class Snake:
 		
 	def eat(self, food):
 		food.snake_i = 0
-		self.food.insert(0, food)
+		self.food.appendleft(food)
 
 
 	def draw(self):
