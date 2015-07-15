@@ -14,6 +14,12 @@ class Food:
 		x = self.position.x
 		y = self.position.y
 		draw_cur(x,y,self.foodtype)
+		
+	def getX(self):
+		return self.position.x
+
+	def getY(self):
+		return self.position.y
 	
 class World:
 	
@@ -83,10 +89,12 @@ class World:
 				break
 		
 		
-		self.spawn_food(x,y)
+		return self.spawn_food(x,y)
 		
 	def spawn_food(self, x, y):
-		self.foods.appendleft(Food(x,y))
+		food = Food(x,y)
+		self.foods.appendleft(food)
+		return food
 	
 	def turn(self,x,y):
 		self.turn_direction = Vec2(x,y)

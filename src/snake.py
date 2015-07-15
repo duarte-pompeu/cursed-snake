@@ -63,7 +63,7 @@ class Snake:
 		self.body = list()
 		self.body.append(head)
 		
-		for i in xrange(1, size+1):
+		for i in xrange(1, size):
 			self.body.append(Piece(x-i, y))
 			
 		self.turning_points = deque()
