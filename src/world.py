@@ -75,8 +75,14 @@ class World:
 			food.draw()
 		
 	def spawn_random_food(self):
-		x = random.randint(self.x1+1,self.x2-1)
-		y = random.randint(self.y1+1,self.y2-1)
+		while True:
+			x = random.randint(self.x1+1,self.x2-1)
+			y = random.randint(self.y1+1,self.y2-1)
+			
+			if not self.snake.overlaps(x,y):
+				break
+		
+		
 		self.spawn_food(x,y)
 		
 	def spawn_food(self, x, y):

@@ -32,6 +32,9 @@ class Piece:
 
 	def update(self):
 		self.position.add(self.speed)
+		
+	def overlaps(self, x, y):
+		return self.getX() is x and self.getY() is y
 	
 	def getX(self):
 		return self.position.x
@@ -78,7 +81,6 @@ class Snake:
 		if head.getSpeedX() is -x and head.getSpeedY() is -y:
 			return
 			
-		
 		head.setSpeed(x,y)
 		self.turning_points.appendleft(Turn(self.getSpeedX(), self.getSpeedY()))
 
@@ -137,7 +139,14 @@ class Snake:
 			if self.getX() is piece.position.x and self.getY() is piece.position.y:
 				self.world.game_over()
 				break
-
+				
+	def overlaps(self, x, y):
+		for piece in self.body:
+			if piece.overlaps(x,y):
+				return True
+				
+		else:
+			return False
 				
 	def size(self):
 		return len(self.body)
