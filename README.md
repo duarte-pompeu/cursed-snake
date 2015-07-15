@@ -8,6 +8,11 @@ Snake game in a terminal window using python and curses
 This game requires **python2** and **ncurses** - it should work in any Unix-like system (Linux, OSX, *BSD, etc.). Probably requires Cygwin to play on Windows but I'm not sure
 
 
+Arch Linux / Manjaro / etc...
+```
+yaourt -S python2 curses
+```
+
 ## Download and play
 
 
