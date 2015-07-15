@@ -62,6 +62,10 @@ def close_curses():
 
 def clear_screen():
 	stdscr.clear()
+	
+def nodelay(n):
+	global stdscr
+	stdscr.nodelay(n)
 
 def draw_window(x1,y1,x2,y2):
 	line = "#"* (x2-x1)

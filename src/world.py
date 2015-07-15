@@ -32,6 +32,7 @@ class World:
 		self.foods = deque()
 		self.spawn_random_food()
 		self.score = 0
+		self.game_on = True
 		
 		
 	def update(self):
@@ -63,7 +64,7 @@ class World:
 		self.spawn_random_food()
 		
 	def game_over(self):
-		self.restart()
+		self.game_on = False
 	
 	def draw(self):
 		draw_window(self.x1-1,self.y1-1,self.x2+1,self.y2+1)
