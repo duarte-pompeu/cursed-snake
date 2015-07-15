@@ -1,5 +1,7 @@
 #!/usr/bin/python2
-
+from lib_common import *
+from gameobjects import *
+from snake import *
 from world import *
 
 def main():

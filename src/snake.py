@@ -1,62 +1,14 @@
 #!/usr/bin/python2
 from collections import deque
+
 from lib_common import *
 from libcurses import *
+from gameobjects import *
 
-class Piece(object):
-
-    def __init__(self, x=0, y=0, speed_x=1, speed_y=0):
-        self.position = Vec2(x, y)
-        self.speed = Vec2(speed_x, speed_y)
-        self.snake_i = -1
-
-    def draw(self, shapes="|-|-"):
-        speed_x = self.getspeedx()
-        speed_y = self.getspeedy()
-
-        if speed_x is 0 and speed_y is 0:
-            shape = shapes[3]
-
-        elif speed_x > 0:
-            shape = shapes[3]
-
-        elif speed_x < 0:
-            shape = shapes[1]
-
-        elif speed_y > 0:
-            shape = shapes[0]
-
-        elif speed_y < 0:
-            shape = shapes[2]
-
-        draw_cur(self.getx(), self.gety(), shape)
-
-    def update(self):
-        self.position.add(self.speed)
-
-    def overlaps(self, x, y):
-        return self.getx() is x and self.gety() is y
-
-    def getx(self):
-        return self.position.x
-
-    def gety(self):
-        return self.position.y
-
-    def getspeedx(self):
-        return self.speed.x
-
-    def getspeedy(self):
-        return self.speed.y
-
-    def setspeed(self, x, y):
-        self.speed = Vec2(x, y)
-
-
-
-class Snake(object):
+class Snake(DynamicObject):
 
     def __init__(self, world, x=0, y=0, size=0):
+        DynamicObject.__init__(self, x, y)
         self.world = world
 
         head = Piece(x, y)
@@ -117,8 +69,8 @@ class Snake(object):
                 food.pop()
                 self.grow(f)
 
-
         self.check_self_collision()
+
 
     def grow(self, food):
         x = food.position.x
@@ -128,6 +80,7 @@ class Snake(object):
         new_piece.speed = self.body[-1].speed.getcopy()
 
         self.body.append(new_piece)
+
 
     def check_self_collision(self):
         body = self.body
@@ -139,6 +92,7 @@ class Snake(object):
                 self.world.game_over()
                 break
 
+
     def overlaps(self, x, y):
         for piece in self.body:
             if piece.overlaps(x, y):
@@ -146,8 +100,10 @@ class Snake(object):
 
         return False
 
+
     def size(self):
         return len(self.body)
+
 
     def eat(self, food):
         food.snake_i = 0
@@ -177,8 +133,10 @@ class Snake(object):
     def draw_head(self):
         self.body[0].draw("^<V>")
 
+
     def draw_head_eating(self):
         self.body[0].draw("V>^<")
+
 
     def tostring(self):
         msg = "SNAKE size: %d\n" % self.size()
