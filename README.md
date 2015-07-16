@@ -18,5 +18,6 @@ yaourt -S python2 curses
 
 Download and play (*stable version*):
 ```
-curl -L https://github.com/duarte-pompeu/snake/archive/0.1.zip > snake.zip; unzip snake.zip; cd ./snake-master/; chmod +x snake.sh; ./snake.sh
+curl -L https://github.com/duarte-pompeu/snake/archive/0.1.1.zip > snake.zip; unzip snake.zip; cd ./snake-0.1.1/; chmod +x snake.sh; ./snake.sh
+
 ```
