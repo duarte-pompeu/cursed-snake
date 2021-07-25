@@ -8,8 +8,8 @@ python-versions = "*"
 
 [metadata]
 lock-version = "1.1"
-python-versions = "^3.9"
-content-hash = "d10825b65db225ef5e770d1b4666cee8100b155a2fc43cda4829db266f118eec"
+python-versions = "3.7.*"
+content-hash = "0b994a02ee0ebc8a0acd1b8225b185af71b67fefe43d81d4e0cee39db38b6595"
 
 [metadata.files]
 windows-curses = [

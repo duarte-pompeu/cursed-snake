@@ -16,6 +16,8 @@ install: ## installs necessary packages
 run: ## runs the program locally
 	$(CMD) run python src/main.py
 
+clean: ## Does nothing at the moment
+
 # lint:
 # 	$(CMD) flake8 $(PYMODULE) $(TESTS) $(EXTRACODE)
 
@@ -31,7 +33,15 @@ run: ## runs the program locally
 # isort:
 # 	$(CMD) isort --recursive $(PYMODULE) $(TESTS) $(EXTRACODE)
 
-clean: ## Does nothing at the moment
+
+build: ## builds a docker image for cursed-snake
+	docker build . -t "cursed-snake:latest"
+
+up: ## runs a container with the docker image
+	docker container run -i -t cursed-snake:latest --rm
+
+upwin: ## rusn the container on windows, using winpty to add compatibility with Linux CLI
+	winpty docker container run -i -t cursed-snake:latest --rm
 
 # inspired by https://gist.github.com/prwhite/8168133#gistcomment-2833138
 help: ## Displays help message (this)
