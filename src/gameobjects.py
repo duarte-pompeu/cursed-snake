@@ -29,7 +29,7 @@ class Piece(DynamicObject):
         speed_x = self.getspeedx()
         speed_y = self.getspeedy()
 
-        if speed_x is 0 and speed_y is 0:
+        if speed_x == 0 and speed_y == 0:
             shape = shapes[3]
 
         elif speed_x > 0:

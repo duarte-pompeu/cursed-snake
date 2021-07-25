@@ -16,7 +16,7 @@ class Snake(DynamicObject):
         self.body = list()
         self.body.append(head)
 
-        for i in xrange(1, size):
+        for i in range(1, size):
             self.body.append(Piece(x-i, y))
 
         self.turning_points = deque()
@@ -46,7 +46,7 @@ class Snake(DynamicObject):
         head = body[0]
         head.update()
 
-        for i in xrange(1, len(body)):
+        for i in range(1, len(body)):
             piece = body[i]
 
             for turn in turns:
@@ -61,7 +61,7 @@ class Snake(DynamicObject):
         if turns and turns[-1].index is len(body):
             turns.pop()
 
-        for i in xrange(0, len(food)):
+        for i in range(0, len(food)):
             f = food[i]
             f.snake_i += 1
 
@@ -85,7 +85,7 @@ class Snake(DynamicObject):
     def check_self_collision(self):
         body = self.body
 
-        for i in xrange(1, len(body)):
+        for i in range(1, len(body)):
             piece = body[i]
 
             if self.getx() is piece.position.x and self.gety() is piece.position.y:
@@ -111,12 +111,12 @@ class Snake(DynamicObject):
 
 
     def draw(self):
-        if any(food.snake_i is 0 for food in self.food):
+        if any(food.snake_i == 0 for food in self.food):
             self.draw_head_eating()
 
         else: self.draw_head()
 
-        for i in xrange(1, len(self.body)):
+        for i in range(1, len(self.body)):
             piece = self.body[i]
 
             for food in self.food:

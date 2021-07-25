@@ -62,7 +62,7 @@ def draw_window(x1, y1, x2, y2):
     draw_cur(x1, y1, line)
     draw_cur(x1, y2, line)
 
-    for i in xrange(y1, y2+1):
+    for i in range(y1, y2+1):
         draw_cur(x1, i, "#")
         draw_cur(x2, i, "#")
 
