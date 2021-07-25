@@ -1,4 +1,0 @@
-services:
-    cursed-snake:
-        image: cursed-snake:latest
-        container_name: cursed-snake

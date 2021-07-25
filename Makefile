@@ -16,6 +16,9 @@ install: ## installs necessary packages
 run: ## runs the program locally
 	$(CMD) run python src/main.py
 
+run-win: ## runs the program locally, with Windows compatibility a layer (WINPTY)
+	winpty $(CMD) run python src/main.py
+
 clean: ## Does nothing at the moment
 
 # lint:
@@ -40,7 +43,7 @@ build: ## builds a docker image for cursed-snake
 up: ## runs a container with the docker image
 	docker container run -i -t cursed-snake:latest --rm
 
-upwin: ## rusn the container on windows, using winpty to add compatibility with Linux CLI
+up-win: ## runs a container with the docker images, with a Windows compatibility layer (WINPTY)
 	winpty docker container run -i -t cursed-snake:latest --rm
 
 # inspired by https://gist.github.com/prwhite/8168133#gistcomment-2833138
