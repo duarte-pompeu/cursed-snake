@@ -1,23 +1,24 @@
 snake
 =====
 
-Snake game in a terminal window using python and curses
+Snake game in a terminal window using python and curses.
 
-## Installing dependencies
+Unfortunately, curses support depends on the terminal used. 
 
-This game requires **python2** and **ncurses** - it should work in any Unix-like system (Linux, OSX, *BSD, etc.). Probably requires Cygwin to play on Windows but I'm not sure
+# Platform / Terminal support
 
+## Windows
 
-Arch Linux / Manjaro / etc...
-```
-yaourt -S python2 curses
-```
+Did not work using `git bash`.
 
-## Download and play
+Worked in VS Code, using a bash shell, and also on CMD. Simply run `make run`.
 
+## Linux
 
-Download and play (*stable version*):
-```
-curl -L https://github.com/duarte-pompeu/snake/archive/0.1.1.zip > snake.zip; unzip snake.zip; cd ./snake-0.1.1/; chmod +x snake.sh; ./snake.sh
+Should work with most terminals.
 
-```
+History:
+
+- 2015: develop the game while learning python 2.
+- 2017: add the MIT license.
+- 2021: port to python 3, manage packages with poetry and create a Makefile.

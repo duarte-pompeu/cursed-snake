@@ -34,7 +34,7 @@ def main():
                 nodelay(1)
                 world.restart()
 
-    except Exception, e:
+    except Exception as e:
         close_curses()
         raise
 

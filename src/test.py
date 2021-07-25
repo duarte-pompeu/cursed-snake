@@ -5,16 +5,16 @@ from snake import *
 from world import *
 
 def main():
-    print test_rand_overlap()
-    print test_piece_overlap()
-    print test_piece_no_overlap()
-    print test_snake_overlap()
+    print(test_rand_overlap())
+    print(test_piece_overlap())
+    print(test_piece_no_overlap())
+    print(test_snake_overlap())
 
 def test_rand_overlap():
     world = World(1, 20, 7, 13)
     snake = world.snake
 
-    for _ in xrange(1, 1000):
+    for _ in range(1, 1000):
         food = world.spawn_random_food()
 
         if snake.overlaps(food.getx(), food.gety()):
@@ -42,7 +42,7 @@ def test_snake_overlap():
     any_length = 5
     snake = Snake(0, any_x, any_y, any_length)
 
-    for i in xrange(0, any_length):
+    for i in range(0, any_length):
         x = any_x-i
         y = any_y
 
