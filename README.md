@@ -1,11 +1,14 @@
+
 cursed-snake
 =====
 
-Snake game in a terminal window using python and curses.
+Snake game in a terminal window using python and lib curses.
 
-Unfortunately, curses support depends on the terminal used. 
+https://user-images.githubusercontent.com/7232812/126900983-f1c84a30-d30a-4c02-b68b-fb01e4a3154c.mp4
 
 # Platform / Terminal support
+
+Unfortunately, curses support depends on the terminal used.
 
 ## Windows
 
