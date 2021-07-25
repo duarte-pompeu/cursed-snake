@@ -1,13 +1,21 @@
-FROM python:3.8-slim
+# inspired by https://medium.com/@harpalsahota/dockerizing-python-poetry-applications-1aa3acb76287
 
-WORKDIR /
+FROM python:3.7-slim
 
-COPY poetry_requirements.txt requirements.txt
-RUN pip install poetry
+# install poetry
+RUN pip3 install poetry
+RUN poetry config virtualenvs.create false
 
-COPY ./src/ src/
+# copy the code
+COPY ./src/ app/
+WORKDIR /app
+RUN export PYTHONPATH=/app/
 
-RUN export PYTHONPATH=src/
+# set up dependencies
+# FIXME: these will not change as often so they should happen first!
+COPY pyproject.toml /app
+RUN poetry install --no-dev
 
-CMD ["python", "src/main.py"]
+
+ENTRYPOINT ["python3", "/app/main.py"]
 

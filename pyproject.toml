@@ -6,7 +6,7 @@ authors = ["Your Name <you@example.com>"]
 
 [tool.poetry.dependencies]
 python = "3.7.*"
-# windows-curses = { version = "^2.2.0", platform = "win32"}
+windows-curses = { version = "^2.2.0", platform = "win32"}
 
 
 [tool.poetry.dev-dependencies]
