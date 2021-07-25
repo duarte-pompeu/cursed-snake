@@ -118,24 +118,55 @@ class Snake(DynamicObject):
 
         for i in range(1, len(self.body)):
             piece = self.body[i]
+            next_piece = self.body[i-1]
 
             for food in self.food:
                 food_pos = food.snake_i
 
                 if food_pos is i:
-                    piece.draw(""""="=""")
+                    piece.draw(ShapesWithCorners(
+                    up = "║",
+                    left = "═", 
+                    down = "║", 
+                    right = "═",
+                    downleft= "╝",
+                    downright = "╚",
+                    upleft = "╗",
+                    upright = "╔",
+                    leftdown="╔",
+                    leftup="╚",
+                    rightdown="╗",
+                    rightup="╝"
+                    ),
+                    next_piece= next_piece)
                     break
 
             else:
-                piece.draw()
+                piece.draw(ShapesWithCorners(
+                   up = "│",
+                    left = "─", 
+                    down = "│", 
+                    right = "─",
+                    downleft= "┘",
+                    downright = "└",
+                    upleft = "┐",
+                    upright = "┌",
+                    leftdown="┌",
+                    leftup="└",
+                    rightdown="┐",
+                    rightup="┘"
+                    ),
+                    next_piece= next_piece
+                )   
+
 
 
     def draw_head(self):
-        self.body[0].draw("^<V>")
+        self.body[0].draw(SimpleShapes(*"".join("^<V>")))
 
 
     def draw_head_eating(self):
-        self.body[0].draw("V>^<")
+        self.body[0].draw(SimpleShapes(*"".join("V>^<")))
 
 
     def tostring(self):
