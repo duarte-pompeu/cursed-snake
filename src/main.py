@@ -59,12 +59,10 @@ def draw(world, instructions):
 def draw_pannel(world, instructions):
     y = 5
     draw_window_y(1, y)
-    msg = "SCORE: " + str(world.score)
+    msg = f"SCORE: {world.score} | HIGH SCORE: {world.high_score}"
     draw_cur(2, y-1, msg)
     draw_cur(2, y-2, instructions)
-    dev_log = "[DEVLOG]"
-    dev_log += " WINDOW LIMITS: " + str(X_LIMIT) + ":" + str(Y_LIMIT)
-    dev_log += " SLEEP_TIME: " + str(SLEEP_TIME)
+    dev_log = f"[DEVLOG] WINDOW LIMITS: {X_LIMIT}:{Y_LIMIT} SLEEP_TIME: {SLEEP_TIME:.2f}"
     draw_cur(2, y-3, dev_log)
 
 
