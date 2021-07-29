@@ -41,10 +41,10 @@ build: ## builds a docker image for cursed-snake
 	docker build . -t "cursed-snake:latest"
 
 up: ## runs a container with the docker image
-	docker container run -i -t cursed-snake:latest --rm
+	docker container run --name cursed-snake -i -t cursed-snake:latest --rm 
 
 up-win: ## runs a container with the docker images, with a Windows compatibility layer (WINPTY)
-	winpty docker container run -i -t cursed-snake:latest --rm
+	winpty docker container run --name cursed-snake -i -t cursed-snake:latest --rm
 
 # inspired by https://gist.github.com/prwhite/8168133#gistcomment-2833138
 help: ## Displays help message (this)

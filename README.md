@@ -15,9 +15,11 @@ Unfortunately, curses support depends on the terminal used.
 
 ## Windows
 
-Did not work using `git bash`.
 
 Worked in VS Code, using a bash shell, and also on CMD. Simply run `make run`.
+
+To use with with *git bash*, need to use `make run-win`. 
+
 
 ## Linux
 
