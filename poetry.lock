@@ -1,4 +1,12 @@
 [[package]]
+name = "asciinema"
+version = "2.0.2"
+description = "Terminal session recorder"
+category = "dev"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "windows-curses"
 version = "2.2.0"
 description = "Support for the standard curses module on Windows"
@@ -9,9 +17,12 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "3.7.*"
-content-hash = "0b994a02ee0ebc8a0acd1b8225b185af71b67fefe43d81d4e0cee39db38b6595"
+content-hash = "90ba2c4bbf55bd7141156515c3debaf7b9b6b6aa63027dd5760bbacb1e46da35"
 
 [metadata.files]
+asciinema = [
+    {file = "asciinema-2.0.2.tar.gz", hash = "sha256:32f2c1a046564e030708e596f67e0405425d1eca9d5ec83cd917ef8da06bc423"},
+]
 windows-curses = [
     {file = "windows_curses-2.2.0-cp36-cp36m-win32.whl", hash = "sha256:1452d771ec6f9b3fef037da2b169196a9a12be4e86a6c27dd579adac70c42028"},
     {file = "windows_curses-2.2.0-cp36-cp36m-win_amd64.whl", hash = "sha256:fc0be372fe6da3c39d7093154ce029115a927bf287f34b4c615e2b3f8c23dfaa"},
