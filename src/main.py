@@ -23,8 +23,19 @@ def main():
             if world.game_on:
                 draw(world, MSG_PLAY)
 
+                def get_pause_time_delta(score):
+                    pause_time_delta = 0.008 * min(score, 5)
+                    pause_time_delta += 0.006 *min(score-5, 5) 
+                    pause_time_delta += 0.004 *min(score-10, 5)
+                    pause_time_delta += 0.002 *min(score-15, 5)
+                    pause_time_delta += 0.001 *min(score-20, 50)
+
+                    return pause_time_delta
+
+
                 global SLEEP_TIME
-                SLEEP_TIME = max(0.1, 0.35 - 0.01 * world.score)
+                pause_delta = get_pause_time_delta(world.score)
+                SLEEP_TIME = max(0.035, 0.15 - pause_delta)
                 time.sleep(SLEEP_TIME)
 
             elif not world.game_on:
@@ -44,7 +55,7 @@ def main():
 def init_all():
     global X_LIMIT, Y_LIMIT
     X_LIMIT, Y_LIMIT = init_curses()
-    world = World(1, min(20, X_LIMIT-2), 7, min(Y_LIMIT-1, 13))
+    world = World(1, min(30, X_LIMIT-2), 7, min(Y_LIMIT-1, 15))
 
     return world
 
