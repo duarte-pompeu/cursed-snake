@@ -3,7 +3,9 @@ from sqlite3 import Connection, Cursor
 
 
 class RepositoryDecorator():
-    def get_cursor(func):
+    def get_cursor_and_commit(func):
+        """Initializes a cursor, commits at the end of the function."""
+
         def wrap(*args, **kwargs):
             connection : Connection = args[0].connection
             cursor : Cursor = connection.cursor()
@@ -20,7 +22,7 @@ class ScoreRepository():
         self.connection = sqlite3.connect(path_to_db)
         self.initialize_score_db()
     
-    @RepositoryDecorator.get_cursor
+    @RepositoryDecorator.get_cursor_and_commit
     def initialize_score_db(self, cursor: Cursor):
         query = """create table if not exists game_values (key text primary key, value blob);"""
         cursor.execute(query)
@@ -29,7 +31,7 @@ class ScoreRepository():
         cursor.execute(query)
 
 
-    @RepositoryDecorator.get_cursor
+    @RepositoryDecorator.get_cursor_and_commit
     def get_score(self, cursor: Cursor) -> int:
         
         cursor.execute("""select * from game_values where key = 'score'""")
@@ -38,10 +40,10 @@ class ScoreRepository():
         if not data:
             return 0
         
-        key, value = data[0]
-        return int(value)
+        score_key, score_value = data[0]
+        return int(score_value)
 
-    @RepositoryDecorator.get_cursor
+    @RepositoryDecorator.get_cursor_and_commit
     def update_score(self, score: int, cursor: Cursor):
         
         score = int(score)
