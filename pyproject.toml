@@ -10,7 +10,7 @@ windows-curses = { version = "^2.2.0", platform = "win32"}
 
 
 [tool.poetry.dev-dependencies]
-asciinema = "^2.0.2"
+asciinema = { version = "^2.0.2", platform = "linux" }
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
