@@ -5,8 +5,10 @@ from sqlite3 import Connection, Cursor
 class RepositoryDecorator():
     def get_cursor(func):
         def wrap(*args, **kwargs):
-            cursor : Cursor = args[0].connection.cursor()
+            connection : Connection = args[0].connection
+            cursor : Cursor = connection.cursor()
             result = func(*args, **kwargs, cursor = cursor)
+            args[0].connection.commit()
             return result
         return wrap
 
@@ -23,7 +25,7 @@ class ScoreRepository():
         query = """create table if not exists game_values (key text primary key, value blob);"""
         cursor.execute(query)
 
-        query = """insert INTO game_values(key, value) SELECT 'score', 0 where not EXISTS (select 1 from game_values where key = 'score') """
+        query = """insert INTO game_values(key, value) SELECT 'score', -1 where not EXISTS (select 1 from game_values where key = 'score') """
         cursor.execute(query)
 
 
@@ -32,6 +34,10 @@ class ScoreRepository():
         
         cursor.execute("""select * from game_values where key = 'score'""")
         data = cursor.fetchall()
+
+        if not data:
+            return 0
+        
         key, value = data[0]
         return int(value)
 

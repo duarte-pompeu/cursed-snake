@@ -14,11 +14,15 @@ score_service = ScoreService()
 
 HIGH_SCORE = score_service.get_highscore()
 
+from loguru import logger
+logger.info("Starting application...")
+
 def update_high_score(current_score: int):
     global HIGH_SCORE
-    
+
     score_service.enter_new_score(current_score)
-    HIGH_SCORE = score_service.get_highscore()
+    high_score = score_service.get_highscore()
+    HIGH_SCORE = high_score
 
 def main():
 
@@ -30,7 +34,6 @@ def main():
                 break
 
             update(world)
-            
 
             if world.game_on:
                 draw(world, MSG_PLAY)
@@ -40,6 +43,8 @@ def main():
                 time.sleep(SLEEP_TIME)
 
             elif not world.game_on:
+                update_high_score(world.score)
+
                 draw(world, MSG_RESTART)
                 nodelay(0)
                 check_input(world)
@@ -70,7 +75,7 @@ def draw(world, instructions):
     world.draw()
 
 def draw_pannel(world, instructions):
-    global HIGH_SCOREq
+    global HIGH_SCORE
     y = 5
     draw_window_y(1, y)
     msg = f"SCORE: {world.score} | HIGH SCORE: {HIGH_SCORE}"
