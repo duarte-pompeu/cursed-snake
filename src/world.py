@@ -16,8 +16,6 @@ class World(object):
         self.y1 = y1
         self.y2 = y2
 
-        self.high_score = 0
-
         self.restart()
 
     def restart(self):
@@ -55,7 +53,6 @@ class World(object):
         self.foods.remove(food)
         self.snake.eat(food)
         self.score += 1
-        self.high_score = max(self.score, self.high_score)
         self.spawn_random_food()
 
     def game_over(self):

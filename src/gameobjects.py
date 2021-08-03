@@ -19,6 +19,7 @@ class Food(StaticObject):
         draw_cur(x, y, self.foodtype)
 
 
+
 class SimpleShapes:
     def __init__(self, up, left, down, right):
         self.up = up
