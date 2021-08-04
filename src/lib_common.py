@@ -4,8 +4,11 @@ class Vec2(object):
         self.y = y
 
     def add(self, vec2):
+        """This method is destructive! <returns tears in non-functional approach>"""
         self.x += vec2.x
         self.y += vec2.y
+
+        return Vec2(self.x, self.y)
 
     def getcopy(self):
         return Vec2(self.x, self.y)

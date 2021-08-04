@@ -3,6 +3,8 @@ import time
 
 from loguru import logger
 
+from utils import logging
+
 from libcurses import (
     check_input,
     clear_screen,
@@ -14,6 +16,8 @@ from libcurses import (
 )
 from services.score_service import ScoreService
 from world import World
+
+logging.init()
 
 X_LIMIT, Y_LIMIT = [0, 0]
 SLEEP_TIME = 0

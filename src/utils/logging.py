@@ -1,3 +1,4 @@
 from loguru import logger
 
-logger.add("logs/file_1.log/", retention="100 days")
+def init():
+    logger.add("logs/file_1.log/", retention="100 days")

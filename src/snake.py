@@ -1,11 +1,15 @@
 #!/usr/bin/python2
 from collections import deque
 
-from gameobjects import Piece, ShapesWithCorners, SimpleShapes, Turn
+from loguru import logger
+
+from gameobjects import Food, Piece, ShapesWithCorners, SimpleShapes, Turn
 from lib_common import DynamicObject, Vec2
 
 
 class Snake(DynamicObject):
+    sees_food: bool
+
     def __init__(self, world, x=0, y=0, size=0):
         DynamicObject.__init__(self, x, y)
         self.world = world
@@ -20,6 +24,7 @@ class Snake(DynamicObject):
 
         self.turning_points = deque()
         self.food = deque()
+        sees_food = False
 
     def turn(self, x, y):
         head = self.body[0]
@@ -104,6 +109,9 @@ class Snake(DynamicObject):
     def draw(self):
         if any(food.snake_i == 0 for food in self.food):
             self.draw_head_eating()
+        
+        elif self.sees_food:
+            self.draw_head_eating()
 
         else:
             self.draw_head()
@@ -168,6 +176,19 @@ class Snake(DynamicObject):
         )
 
         return msg
+    
+    def sees_this_food(self, food : Food):
+        head = self.body[0]
+        head_speed = head.getspeed()
+
+        front_of_head = head.getposition().getcopy().add(head_speed)
+
+        food_pos = food.getposition()
+        if front_of_head.equals(food_pos):
+            logger.debug("I see some food!")
+            return True
+        else:
+            return False
 
     def getx(self):
         return self.body[0].getx()
