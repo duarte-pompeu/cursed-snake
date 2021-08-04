@@ -13,7 +13,10 @@ from libcurses import (
     nodelay,
 )
 from services.score_service import ScoreService
+from utils import logging
 from world import World
+
+logging.init()
 
 X_LIMIT, Y_LIMIT = [0, 0]
 SLEEP_TIME = 0
