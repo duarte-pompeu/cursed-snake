@@ -1,15 +1,19 @@
-from repositories.score_repo import ScoreRepository
 from loguru import logger
 
+from repositories.score_repo import ScoreRepository
+
+
 class ScoreService:
-    repo : ScoreRepository
-    
+    repo: ScoreRepository
+
     def __init__(self, repo: ScoreRepository = ScoreRepository()):
         self.repo = repo
 
-    def get_highscore(self,) -> int:
+    def get_highscore(
+        self,
+    ) -> int:
         return self.repo.get_score()
-    
+
     def enter_new_score(self, score: int):
         logger.info(f"Entered a new score: {score}")
 
@@ -22,6 +26,3 @@ class ScoreService:
             self.repo.update_score(score)
         else:
             logger.info("High score remains unbeaten, will not update it.")
-
-        
-

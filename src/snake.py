@@ -1,12 +1,12 @@
 #!/usr/bin/python2
 from collections import deque
 
+from gameobjects import *
 from lib_common import *
 from libcurses import *
-from gameobjects import *
+
 
 class Snake(DynamicObject):
-
     def __init__(self, world, x=0, y=0, size=0):
         DynamicObject.__init__(self, x, y)
         self.world = world
@@ -17,11 +17,10 @@ class Snake(DynamicObject):
         self.body.append(head)
 
         for i in range(1, size):
-            self.body.append(Piece(x-i, y))
+            self.body.append(Piece(x - i, y))
 
         self.turning_points = deque()
         self.food = deque()
-
 
     def turn(self, x, y):
         head = self.body[0]
@@ -36,7 +35,6 @@ class Snake(DynamicObject):
 
         head.setspeed(x, y)
         self.turning_points.appendleft(Turn(self.getspeedx(), self.getspeedy()))
-
 
     def update(self):
         body = self.body
@@ -71,7 +69,6 @@ class Snake(DynamicObject):
 
         self.check_self_collision()
 
-
     def grow(self, food):
         x = food.position.x
         y = food.position.y
@@ -80,7 +77,6 @@ class Snake(DynamicObject):
         new_piece.speed = self.body[-1].speed.getcopy()
 
         self.body.append(new_piece)
-
 
     def check_self_collision(self):
         body = self.body
@@ -92,7 +88,6 @@ class Snake(DynamicObject):
                 self.world.game_over()
                 break
 
-
     def overlaps(self, x, y):
         for piece in self.body:
             if piece.overlaps(x, y):
@@ -100,81 +95,80 @@ class Snake(DynamicObject):
 
         return False
 
-
     def size(self):
         return len(self.body)
-
 
     def eat(self, food):
         food.snake_i = 0
         self.food.appendleft(food)
 
-
     def draw(self):
         if any(food.snake_i == 0 for food in self.food):
             self.draw_head_eating()
 
-        else: self.draw_head()
+        else:
+            self.draw_head()
 
         for i in range(1, len(self.body)):
             piece = self.body[i]
-            next_piece = self.body[i-1]
+            next_piece = self.body[i - 1]
 
             for food in self.food:
                 food_pos = food.snake_i
 
                 if food_pos is i:
-                    piece.draw(ShapesWithCorners(
-                    up = "║",
-                    left = "═", 
-                    down = "║", 
-                    right = "═",
-                    downleft= "╝",
-                    downright = "╚",
-                    upleft = "╗",
-                    upright = "╔",
-                    leftdown="╔",
-                    leftup="╚",
-                    rightdown="╗",
-                    rightup="╝"
-                    ),
-                    next_piece= next_piece)
+                    piece.draw(
+                        ShapesWithCorners(
+                            up="║",
+                            left="═",
+                            down="║",
+                            right="═",
+                            downleft="╝",
+                            downright="╚",
+                            upleft="╗",
+                            upright="╔",
+                            leftdown="╔",
+                            leftup="╚",
+                            rightdown="╗",
+                            rightup="╝",
+                        ),
+                        next_piece=next_piece,
+                    )
                     break
 
             else:
-                piece.draw(ShapesWithCorners(
-                   up = "│",
-                    left = "─", 
-                    down = "│", 
-                    right = "─",
-                    downleft= "┘",
-                    downright = "└",
-                    upleft = "┐",
-                    upright = "┌",
-                    leftdown="┌",
-                    leftup="└",
-                    rightdown="┐",
-                    rightup="┘"
+                piece.draw(
+                    ShapesWithCorners(
+                        up="│",
+                        left="─",
+                        down="│",
+                        right="─",
+                        downleft="┘",
+                        downright="└",
+                        upleft="┐",
+                        upright="┌",
+                        leftdown="┌",
+                        leftup="└",
+                        rightdown="┐",
+                        rightup="┘",
                     ),
-                    next_piece= next_piece
-                )   
-
-
+                    next_piece=next_piece,
+                )
 
     def draw_head(self):
         self.body[0].draw(SimpleShapes(*"".join("^<V>")))
 
-
     def draw_head_eating(self):
         self.body[0].draw(SimpleShapes(*"".join("V>^<")))
 
-
     def tostring(self):
         msg = "SNAKE size: %d\n" % self.size()
-        msg += "pos: (%s) $ speed (%s)" %(self.getposition().tostring(), self.getspeed().tostring())
+        msg += "pos: (%s) $ speed (%s)" % (
+            self.getposition().tostring(),
+            self.getspeed().tostring(),
+        )
 
         return msg
-
 
     def getx(self):
         return self.body[0].getx()
