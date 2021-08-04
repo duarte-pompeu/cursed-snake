@@ -3,8 +3,6 @@ import time
 
 from loguru import logger
 
-from utils import logging
-
 from libcurses import (
     check_input,
     clear_screen,
@@ -15,6 +13,7 @@ from libcurses import (
     nodelay,
 )
 from services.score_service import ScoreService
+from utils import logging
 from world import World
 
 logging.init()

@@ -24,7 +24,7 @@ class Snake(DynamicObject):
 
         self.turning_points = deque()
         self.food = deque()
-        sees_food = False
+        self.sees_food = False
 
     def turn(self, x, y):
         head = self.body[0]
@@ -109,7 +109,7 @@ class Snake(DynamicObject):
     def draw(self):
         if any(food.snake_i == 0 for food in self.food):
             self.draw_head_eating()
-        
+
         elif self.sees_food:
             self.draw_head_eating()
 
@@ -176,8 +176,8 @@ class Snake(DynamicObject):
         )
 
         return msg
-    
-    def sees_this_food(self, food : Food):
+
+    def sees_this_food(self, food: Food):
         head = self.body[0]
         head_speed = head.getspeed()
 

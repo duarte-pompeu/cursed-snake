@@ -45,13 +45,11 @@ class World(object):
             or snake.getx() > self.x2
         ):
             self.game_over()
-        
 
         if any([snake.sees_this_food(food) for food in self.foods]):
             snake.sees_food = True
         else:
             snake.sees_food = False
-
 
         for food in self.foods:
             if snake.getx() == food.position.x and snake.gety() == food.position.y:
