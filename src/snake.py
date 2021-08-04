@@ -1,9 +1,8 @@
 #!/usr/bin/python2
 from collections import deque
 
-from gameobjects import *
-from lib_common import *
-from libcurses import *
+from gameobjects import Piece, ShapesWithCorners, SimpleShapes, Turn
+from lib_common import DynamicObject, Vec2
 
 
 class Snake(DynamicObject):

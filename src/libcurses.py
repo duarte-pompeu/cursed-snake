@@ -72,6 +72,7 @@ def draw_window(x1, y1, x2, y2):
 
 
 def draw_window_y(y1, y2):
+    # FIXME: rename
     x1 = 0
     x2 = X_TERM_LIM
 
@@ -91,5 +92,5 @@ def draw_cur(x, y, msg):
     try:
         STDSCR.addstr(real_y, real_x, msg)
 
-    except:
+    except Exception:
         pass

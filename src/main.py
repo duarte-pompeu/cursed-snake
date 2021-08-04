@@ -1,10 +1,19 @@
 #!/usr/bin/python2
 import time
 
-from libcurses import *
+from loguru import logger
+
+from libcurses import (
+    check_input,
+    clear_screen,
+    close_curses,
+    draw_cur,
+    draw_window_y,
+    init_curses,
+    nodelay,
+)
 from services.score_service import ScoreService
-from snake import *
-from world import *
+from world import World
 
 X_LIMIT, Y_LIMIT = [0, 0]
 SLEEP_TIME = 0
@@ -15,7 +24,6 @@ score_service = ScoreService()
 
 HIGH_SCORE = score_service.get_highscore()
 
-from loguru import logger
 
 logger.info("Starting application...")
 
@@ -32,7 +40,7 @@ def main():
 
     try:
         world = init_all()
-        current_score = 0
+
         while True:
             if check_input(world) == -1:
                 break
@@ -66,8 +74,7 @@ def main():
                 world.restart()
 
     except Exception as e:
-        close_curses()
-        raise
+        logger.exception(e)
 
     finally:
         close_curses()

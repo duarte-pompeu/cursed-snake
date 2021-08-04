@@ -6,12 +6,13 @@
 CMD:=poetry run
 SOURCE_CODE:=src/
 TESTS:=tests
+EXTRA_CODE:=extra/
 
 all: install run ## Installs and runs locally
 
 install: ## installs necessary packages
-	$(CMD) update
-	$(CMD) install
+	poetry update
+	poetry install
 
 run: ## runs the program locally
 	$(CMD) python src/main.py
@@ -21,15 +22,15 @@ run-win: ## runs the program locally, with Windows compatibility a layer (WINPTY
 
 clean: ## Does nothing at the moment
 
-format: 
-	$(CMD) black ${SOURCE_CODE}
-	$(CMD) isort $(SOURCE_CODE)
+format: ## Formats the code and sorts imports consistently
+	$(CMD) black ${SOURCE_CODE} ${EXTRA_CODE}
+	$(CMD) isort $(SOURCE_CODE) ${EXTRA_CODE}
 
-# lint:
-# 	$(CMD) flake8 $(SOURCE_CODE) $(TESTS) $(EXTRACODE)
+lint: ## Analyzes the code and reports inconsistencies
+	$(CMD) flake8 $(SOURCE_CODE) ${EXTRA_CODE} --extend-ignore=E501 || true
 
 # type:
-# 	$(CMD) mypy $(SOURCE_CODE) $(TESTS) $(EXTRACODE)
+# 	$(CMD) mypy $(SOURCE_CODE) $(TESTS) $(EXTRA_CODE)
 
 # test:
 # 	$(CMD) pytest --cov=$(SOURCE_CODE) $(TESTS)
@@ -38,7 +39,7 @@ format:
 # 	$(CMD) pytest --cov=$(SOURCE_CODE) $(TESTS) --cov-report html
 
 # isort:
-# 	$(CMD) isort --recursive $(SOURCE_CODE) $(TESTS) $(EXTRACODE)
+# 	$(CMD) isort --recursive $(SOURCE_CODE) $(TESTS) $(EXTRA_CODE)
 
 
 build: ## builds a docker image for cursed-snake

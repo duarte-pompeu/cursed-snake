@@ -56,3 +56,28 @@ class DynamicObject(StaticObject):
 
     def getspeedy(self):
         return self.speed.y
+
+    def is_moving(
+        self,
+    ):
+        return self.getspeedy != 0 or self.getspeedx != 0
+
+    def is_moving_up(
+        self,
+    ):
+        return self.getspeedy() > 0
+
+    def is_moving_left(
+        self,
+    ):
+        return self.getspeedx() < 0
+
+    def is_moving_down(
+        self,
+    ):
+        return self.getspeedy() < 0
+
+    def is_moving_right(
+        self,
+    ):
+        return self.getspeedx() > 0

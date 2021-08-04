@@ -2,10 +2,10 @@
 import random
 from collections import deque
 
-from gameobjects import *
-from lib_common import *
-from libcurses import *
-from snake import *
+from gameobjects import Food
+from lib_common import Vec2
+from libcurses import draw_window
+from snake import Snake
 
 
 class World(object):

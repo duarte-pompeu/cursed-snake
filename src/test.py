@@ -1,8 +1,9 @@
 #!/usr/bin/python2
-from gameobjects import *
-from lib_common import *
-from snake import *
-from world import *
+
+
+from gameobjects import Piece
+from snake import Snake
+from world import World
 
 
 def main():
