@@ -1,14 +1,17 @@
 #!/usr/bin/python2
-from lib_common import *
-from gameobjects import *
-from snake import *
-from world import *
+
+
+from gameobjects import Piece
+from snake import Snake
+from world import World
+
 
 def main():
     print(test_rand_overlap())
     print(test_piece_overlap())
     print(test_piece_no_overlap())
     print(test_snake_overlap())
+
 
 def test_rand_overlap():
     world = World(1, 20, 7, 13)
@@ -22,6 +25,7 @@ def test_rand_overlap():
 
     return True
 
+
 def test_piece_overlap():
     any_x = 1
     any_y = 1
@@ -29,12 +33,14 @@ def test_piece_overlap():
     piece = Piece(any_x, any_y)
     return piece.overlaps(any_x, any_y)
 
+
 def test_piece_no_overlap():
     any_x = 1
     any_y = 1
 
-    piece = Piece(any_x+1, any_y)
+    piece = Piece(any_x + 1, any_y)
     return not piece.overlaps(any_x, any_y)
+
 
 def test_snake_overlap():
     any_x = 10
@@ -43,13 +49,14 @@ def test_snake_overlap():
     snake = Snake(0, any_x, any_y, any_length)
 
     for i in range(0, any_length):
-        x = any_x-i
+        x = any_x - i
         y = any_y
 
         if not snake.overlaps(x, y):
             return False
 
     return True
+
 
 def test_snake_overlaps_itself():
     any_x = 10

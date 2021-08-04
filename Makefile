@@ -1,40 +1,45 @@
 # inspired by https://gist.github.com/trickeydan/0bace38b00ba8488b5aa1f178b1f3f33
 
-.PHONY: all install run clean lint type test test-cov help help2
+.PHONY: all install run clean format lint type test test-cov help help2
 .DEFAULT_GOAL:=help
 
-CMD:=poetry
-PYMODULE:=src/
+CMD:=poetry run
+SOURCE_CODE:=src/
 TESTS:=tests
+EXTRA_CODE:=extra/
 
 all: install run ## Installs and runs locally
 
 install: ## installs necessary packages
-	$(CMD) update
-	$(CMD) install
+	poetry update
+	poetry install
 
 run: ## runs the program locally
-	$(CMD) run python src/main.py
+	$(CMD) python src/main.py
 
 run-win: ## runs the program locally, with Windows compatibility a layer (WINPTY)
-	winpty $(CMD) run python src/main.py
+	winpty $(CMD) python src/main.py
 
 clean: ## Does nothing at the moment
 
-# lint:
-# 	$(CMD) flake8 $(PYMODULE) $(TESTS) $(EXTRACODE)
+format: ## Formats the code and sorts imports consistently
+	$(CMD) black ${SOURCE_CODE} ${EXTRA_CODE}
+	$(CMD) isort $(SOURCE_CODE) ${EXTRA_CODE}
+
+lint: ## Analyzes the code and reports inconsistencies
+	$(CMD) flake8 $(SOURCE_CODE) ${EXTRA_CODE} --extend-ignore=E501 || true
 
 # type:
-# 	$(CMD) mypy $(PYMODULE) $(TESTS) $(EXTRACODE)
+# 	$(CMD) mypy $(SOURCE_CODE) $(TESTS) $(EXTRA_CODE)
 
 # test:
-# 	$(CMD) pytest --cov=$(PYMODULE) $(TESTS)
+# 	$(CMD) pytest --cov=$(SOURCE_CODE) $(TESTS)
 
 # test-cov:
-# 	$(CMD) pytest --cov=$(PYMODULE) $(TESTS) --cov-report html
+# 	$(CMD) pytest --cov=$(SOURCE_CODE) $(TESTS) --cov-report html
 
 # isort:
-# 	$(CMD) isort --recursive $(PYMODULE) $(TESTS) $(EXTRACODE)
+# 	$(CMD) isort --recursive $(SOURCE_CODE) $(TESTS) $(EXTRA_CODE)
 
 
 build: ## builds a docker image for cursed-snake

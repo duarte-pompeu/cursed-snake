@@ -1,2 +1,2 @@
-class Piece():
+class Piece:
     ...

@@ -1,7 +1,8 @@
-from repositories.score_repo import ScoreRepository
 import random
 
-n = random.randint(0,100)
+from repositories.score_repo import ScoreRepository
+
+n = random.randint(0, 100)
 
 repo = ScoreRepository("test.db")
 # repo.update_score(0)
